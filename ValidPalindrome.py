@@ -1,35 +1,16 @@
-#!/usr/bin/python3
-def isPalindrome(self, s):
-    """
-    :type s: str
-    :rtype: bool
-    """        
-    import re
-    # ripped off non-word character and upper case s(case insensitive)
-    s = re.sub(r"[^\w]*", "", s)
-    s = s.upper()
-    
-    # empty string considered as valid by specification
-    # also, single character is a valid case
-    if s == '' or len(s) == 1:
+# https://leetcode.com/problems/valid-palindrome/
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        i, j = 0, len(s)-1
+        while i < j:
+            a, b = s[i].lower(), s[j].lower()
+            if a.isalnum() and b.isalnum():
+                if a != b:
+                    return False
+                else:
+                    i += 1
+                    j -= 1
+            else:
+                i += (not a.isalnum())
+                j -= (not b.isalnum())
         return True
-
-    # compare string from both ends
-    leftSide, rightSide = 0, len(s)-1
-    flg = True
-    while True:
-        flg = s[leftSide] == s[rightSide]
-
-        # comparison failed
-        if not flg:
-            break
-
-        # move both end's pointer
-        leftSide += 1
-        rightSide -= 1
-        
-        # if both pointers meet at the middle of the string
-        if leftSide > rightSide:
-            break
-
-    return flg
